@@ -33,12 +33,12 @@ function App() {
   
   return (
     <div className="">
-    <h1 className="text-center mb-10 font-bold text-gray-600 underline">Posts</h1>
+    <h1 className="text-center mt-2 font-bold text-gray-600 underline">Posts</h1>
      {/* <Posts postsData={postsData}/> */}
-      <div className="w-1/2 mx-auto grid grid-cols-1 gap-2 p-10">
+      <div className="lg:w-1/2 mx-auto grid grid-cols-1 gap-2 p-10">
         {postsData.map((post: IPost, index) => (
-          <div className="flex justify-between gap-2">
-            <div key={post.id} className="flex w-full gap-4 font-semibold text-gray-500 justify-center border border-gray-400 rounded py-2 px-8">
+          <div className="flex justify-between gap-2 ">
+            <div key={post.id} className="flex h-20 lg:h-auto w-full gap-4 font-semibold text-gray-500 justify-left items-center border border-gray-400 rounded py-2 px-8">
               <p>{post.id}</p><p>{post.title}</p>
             </div>
             <button className="w-10 border bg-blue-500 rounded font-semibold text-white uppercase flex justify-center items-center" onClick={() => deletePost(post.id)}><MdDeleteOutline/></button>
