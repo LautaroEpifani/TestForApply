@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Dispatch} from "react";
 import { ChangeEvent, FormEvent, useState, useRef } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import axios from "axios";
@@ -7,24 +7,23 @@ const initialPost = {
   title: "",
   body: "",
   userId: 1,
-  id: null,
+  id: undefined,
 };
 
-interface IPosts {
+interface Post {
   title: string;
   body: string;
   userId: number;
   id: undefined | number;
 }
 
-const NewPost = () => {
-  const [posts, setPosts] = useState<IPosts[]>([]);
+interface Props {
+  setNewPost: React.Dispatch<React.SetStateAction<Post>>
+}
+
+const NewPost = ({ setNewPost }: Props) => {
   const [post, setPost] = useState(initialPost);
 
-  const deletePost = (postId: number | undefined) => {
-    const filteredPosts = posts.filter((post: IPosts) => post.id !== postId);
-    setPosts(filteredPosts);
-  };
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -36,7 +35,7 @@ const NewPost = () => {
       .post("https://jsonplaceholder.typicode.com/posts", post)
       .then((res) => {
         console.log(res.data);
-        setPosts([...posts, res.data]);
+        setNewPost(res.data)
       });
     setPost(initialPost);
   };
@@ -65,20 +64,6 @@ const NewPost = () => {
           Save
         </button>
       </form>
-      {posts.map((post: IPosts, index) => (
-        <div key={post.id} className="flex justify-between gap-2 mt-4">
-          <div className="flex h-20 lg:h-auto w-full gap-4 font-semibold text-gray-500 justify-left items-center border border-gray-400 rounded py-2 px-8">
-            <p>{post.id}</p>
-            <p>{post.title}</p>
-          </div>
-          <button
-            className="w-10 border bg-blue-500 rounded font-semibold text-white uppercase flex justify-center items-center"
-            onClick={() => deletePost(post.id)}
-          >
-            <MdDeleteOutline />
-          </button>
-        </div>
-      ))}
     </div>
   );
 };
