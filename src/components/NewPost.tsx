@@ -1,28 +1,23 @@
 import React, {Dispatch} from "react";
 import { ChangeEvent, FormEvent, useState, useRef } from "react";
-import { MdDeleteOutline } from "react-icons/md";
+import { Post } from '../types'
 import axios from "axios";
 
-const initialPost = {
+const INITIAL_POST = {
   title: "",
   body: "",
   userId: 1,
   id: undefined,
 };
 
-interface Post {
-  title: string;
-  body: string;
-  userId: number;
-  id: undefined | number;
-}
+
 
 interface Props {
   setNewPost: React.Dispatch<React.SetStateAction<Post>>
 }
 
 const NewPost = ({ setNewPost }: Props) => {
-  const [post, setPost] = useState(initialPost);
+  const [post, setPost] = useState(INITIAL_POST);
 
 
   const handleChange = (
@@ -37,7 +32,7 @@ const NewPost = ({ setNewPost }: Props) => {
         console.log(res.data);
         setNewPost(res.data)
       });
-    setPost(initialPost);
+    setPost(INITIAL_POST);
   };
 
   return (

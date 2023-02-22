@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { MdDeleteOutline } from "react-icons/md";
 import NewPost from "./components/NewPost";
-
-interface Post {
-  body: string;
-  id: number | undefined;
-  title: string;
-  userId: number;
-  
-}
+import { Post } from './types'
 
 const INITIAL_STATE = {
     title: "",
@@ -30,7 +23,7 @@ function App() {
   };
 
   useEffect(() => {
-    const getData = axios
+    const getData: Promise<void> = axios
       .get("https://jsonplaceholder.typicode.com/posts/")
       .then((response) => setPostsData(response.data.splice(90, 100)))
       .catch(function (error) {
@@ -45,7 +38,6 @@ function App() {
     }
   }, [newPost]);
 
-  console.log(postsData)
   return (
     <div className="">
       <h1 className="text-center mt-2 font-bold text-gray-600 underline">
